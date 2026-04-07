@@ -1,0 +1,61 @@
+name: Add Curated Article
+
+on:
+  workflow_dispatch:
+    inputs:
+      hn_id:
+        description: HN item ID
+        required: true
+      title:
+        description: Article title
+        required: true
+      date:
+        description: Curation date (YYYY-MM-DD)
+        required: true
+      note:
+        description: Curator note (optional)
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  add-article:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepend article to curated.json
+        env:
+          HN_ID: ${{ github.event.inputs.hn_id }}
+          TITLE: ${{ github.event.inputs.title }}
+          DATE: ${{ github.event.inputs.date }}
+          NOTE: ${{ github.event.inputs.note }}
+        run: |
+          if [ -n "$NOTE" ]; then
+            NEW_ITEM=$(jq -n \
+              --arg hnID  "$HN_ID" \
+              --arg title "$TITLE" \
+              --arg date  "$DATE"  \
+              --arg note  "$NOTE"  \
+              '{hnID: $hnID, title: $title, date: $date, note: $note}')
+          else
+            NEW_ITEM=$(jq -n \
+              --arg hnID  "$HN_ID" \
+              --arg title "$TITLE" \
+              --arg date  "$DATE"  \
+              '{hnID: $hnID, title: $title, date: $date}')
+          fi
+          jq --argjson item "$NEW_ITEM" \
+            '.items = [$item] + .items' \
+            public/curated.json > tmp.json && mv tmp.json public/curated.json
+
+      - name: Commit and push
+        env:
+          COMMIT_TITLE: ${{ github.event.inputs.title }}
+        run: |
+          git config user.name  "Liquid News Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add public/curated.json
+          git commit -m "curate: $COMMIT_TITLE"
+          git push
