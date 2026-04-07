@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+# Required for the Pages deployment steps below
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy can run at a time; cancel any in-flight run when a new
+# push lands (e.g. a quick curated.json edit right after a code push).
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v6.2.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      # Reads the Pages config for this repo and outputs the correct base_path
+      # ('/repo-name' for a project site, '' for a user/org site).
+      - uses: actions/configure-pages@v5
+        id: pages
+
+      # BASE_PATH is consumed by vite.config.ts to set the asset base URL.
+      # Using env: here (not inline expression) is the safe injection pattern.
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build
+        run: pnpm build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
