@@ -2,6 +2,12 @@
   "version": 1,
   "items": [
     {
+      "hnID": "Are We Idiocracy Yet?",
+      "title": "Are We Idiocracy Yet?",
+      "date": "2026-04-07",
+      "note": "test"
+    },
+    {
       "hnID": "47660925",
       "title": "Issue: Claude Code is unusable for complex engineering tasks with Fev updates",
       "date": "2026-04-07",
