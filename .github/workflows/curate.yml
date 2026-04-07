@@ -54,8 +54,8 @@ jobs:
         env:
           COMMIT_TITLE: ${{ github.event.inputs.title }}
         run: |
-          git config user.name  "Liquid News Bot"
-          git config user.email "bot@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/curated.json
           git commit -m "curate: $COMMIT_TITLE"
           git push

@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_run:
+    workflows: ["Add Curated Article"]
+    types: [completed]
 
 # Required for the Pages deployment steps below
 permissions:
@@ -18,6 +21,11 @@ concurrency:
 
 jobs:
   build:
+    # For workflow_run triggers, only proceed if curate.yml succeeded.
+    # For direct pushes, always proceed.
+    if: >-
+      github.event_name == 'push' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
