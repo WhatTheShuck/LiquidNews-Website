@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "hnID": "39876543",
+      "title": "The Hacker News Effect: What Happens When Your Site Gets 50k Visitors in an Hour",
+      "date": "2026-04-07",
+      "note": "A fascinating breakdown of traffic spikes, caching strategies, and what actually fails first. Practical lessons for anyone running a side project."
+    }
+  ]
+}
