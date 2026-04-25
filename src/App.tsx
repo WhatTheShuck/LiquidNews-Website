@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Articles from './pages/Articles'
+import Privacy from './pages/Privacy'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/articles" element={<Articles />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </div>
     </>

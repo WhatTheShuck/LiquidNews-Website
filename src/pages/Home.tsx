@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const PHONE_STORIES = [
   {
@@ -22,7 +22,7 @@ const FEATURES = [
   {
     icon: '✦',
     title: 'Curated Feed',
-    desc: 'Hand-picked articles from Hacker News — the signal, without the noise. Updated by a human who reads everything.',
+    desc: 'Top articles from leading tech newsletters, automatically surfaced through Hacker News. Quality reads, no scroll fatigue.',
   },
   {
     icon: '◈',
@@ -31,8 +31,8 @@ const FEATURES = [
   },
   {
     icon: '◎',
-    title: 'Full HN Integration',
-    desc: 'Jump straight into comments, vote, and explore threads without leaving the app. HN, at your fingertips.',
+    title: 'Full HN Experience',
+    desc: 'Browse threads, vote, reply, save for later, and catch up on missed stories by date range. Everything HN, beautifully wrapped.',
   },
 ]
 
@@ -120,6 +120,7 @@ export default function Home() {
       <footer className="site-footer">
         <span className="footer-logo">Liquid News</span>
         <span>© {new Date().getFullYear()} · Built with care</span>
+        <NavLink to="/privacy" className="footer-link">Privacy Policy</NavLink>
       </footer>
     </>
   )

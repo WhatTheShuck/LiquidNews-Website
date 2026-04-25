@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 
 interface Item {
   hnID: string
@@ -116,6 +117,7 @@ export default function Articles() {
       <footer className="site-footer">
         <span className="footer-logo">Liquid News</span>
         <span>© {new Date().getFullYear()} · Built with care</span>
+        <NavLink to="/privacy" className="footer-link">Privacy Policy</NavLink>
       </footer>
     </>
   )
