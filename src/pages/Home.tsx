@@ -1,21 +1,11 @@
 import { Link, NavLink } from 'react-router-dom'
 
-const PHONE_STORIES = [
-  {
-    title: "Ask HN: What's the most impactful side project you've shipped?",
-    domain: 'news.ycombinator.com',
-    points: '847 points',
-  },
-  {
-    title: "We built a compiler in a weekend \u2014 here's what we learned",
-    domain: 'blog.example.com',
-    points: '612 points',
-  },
-  {
-    title: 'The unreasonable effectiveness of just shipping things',
-    domain: 'medium.com',
-    points: '1.2k points',
-  },
+const SHOTS = [
+  { src: '/screenshots/thread.jpg', label: 'Comment threads' },
+  { src: '/screenshots/reader.jpg', label: 'Built-in reader' },
+  { src: '/screenshots/curated.jpg', label: 'Curated picks' },
+  { src: '/screenshots/catchup.jpg', label: 'Catch up by date' },
+  { src: '/screenshots/themes.jpg', label: 'Theme picker' },
 ]
 
 const FEATURES = [
@@ -75,27 +65,39 @@ export default function Home() {
         <div className="phone-mockup-wrapper">
           <div className="phone-mockup-glow" />
           <div className="phone-mockup">
-            <div className="phone-notch" />
-            <div className="phone-screen">
-              <div className="phone-app-bar">
-                <span className="phone-app-title">Liquid News</span>
-                <div className="phone-status">
-                  <div className="phone-status-dot" />
-                  <div className="phone-status-dot" style={{ opacity: 0.5 }} />
-                  <div className="phone-status-dot" style={{ opacity: 0.25 }} />
-                </div>
-              </div>
-              {PHONE_STORIES.map((story, i) => (
-                <div key={i} className="phone-story">
-                  <div className="phone-story-title">{story.title}</div>
-                  <div className="phone-story-meta">
-                    <span className="phone-story-domain">{story.domain}</span>
-                    <span className="phone-story-points">{story.points}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <img
+              className="phone-screenshot"
+              src="/screenshots/feed.jpg"
+              alt="The Liquid News feed showing top Hacker News stories"
+              width={720}
+              height={1564}
+            />
           </div>
+        </div>
+      </section>
+
+      {/* Screenshot showcase */}
+      <section className="showcase-section">
+        <span className="section-label">Take a look</span>
+        <h2 className="section-title">
+          Designed to feel<br />right at home on iOS.
+        </h2>
+        <div className="showcase-gallery">
+          {SHOTS.map((shot) => (
+            <figure key={shot.src} className="showcase-item">
+              <div className="phone-mockup phone-mockup-sm">
+                <img
+                  className="phone-screenshot"
+                  src={shot.src}
+                  alt={shot.label}
+                  loading="lazy"
+                  width={720}
+                  height={1564}
+                />
+              </div>
+              <figcaption className="showcase-caption">{shot.label}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
